@@ -5,7 +5,9 @@ import java.util.Queue;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -83,6 +85,7 @@ class CanvasThread extends Thread
 class node
 {
 	int X,Y,R,ind;
+	Bitmap img=null;
 	public node(int ind,int X,int Y,int R)
 	{
 		this.X=X;
@@ -95,11 +98,12 @@ class node
 class Panel extends SurfaceView implements SurfaceHolder.Callback ,OnTouchListener//,OnClickListener
 {
 	private CanvasThread canvasthread;
+	private ElectionsActivity _ElectionsActivity;
 	private	LinearLayout	popView;
 	private EditText	popupView_text;
 	private int	connectivity[][]=new int[][]{
-			{1,5,6},
-			{2,3},
+			{1,5,3},
+			{2,6},
 			{7},
 			{},
 			{},
@@ -125,15 +129,18 @@ class Panel extends SurfaceView implements SurfaceHolder.Callback ,OnTouchListen
 			for(i=1;i<=connectivity[cur.ind].length;i++)
 			{
 				newnode=new node(connectivity[cur.ind][i-1], (int)(cur.X+Math.cos(dAngle*i)*(cur.R+cur.R/2)), (int)(cur.Y+Math.sin(dAngle*i)*(cur.R+cur.R/2)), cur.R/2);
+				if(newnode.ind==3)
+					newnode.img=BitmapFactory.decodeResource(getResources(), R.drawable.pin);
 				nodes.add(newnode);
 				q.add(newnode);
 			}
 		}
 		
 	}
-	public Panel(Context context)//,ElectionsActivity ea)
+	public Panel(Context context,ElectionsActivity ea)
 	{
 		super(context);
+		_ElectionsActivity=ea;
 //		init();
 		getHolder().addCallback(this);
 		canvasthread = new CanvasThread(getHolder(), this);
@@ -242,13 +249,22 @@ class Panel extends SurfaceView implements SurfaceHolder.Callback ,OnTouchListen
 			
 			// smooth's out the edges of what is being drawn
 			paint.setAntiAlias(true);
-
+			node cur;
             for(int i=nodes.size()-1;i>=0;i--)
             {
+            	cur=nodes.get(i);
             	paint.setColor(Color.GREEN);
-            	canvas.drawCircle((nodes.get(i).X+shiftX)*zoomFactor, (nodes.get(i).Y+shiftY)*zoomFactor, nodes.get(i).R*zoomFactor, paint);
+            	canvas.drawCircle((cur.X+shiftX)*zoomFactor, (cur.Y+shiftY)*zoomFactor, cur.R*zoomFactor, paint);
             	paint.setColor(Color.YELLOW);
-            	canvas.drawCircle((nodes.get(i).X+shiftX)*zoomFactor, (nodes.get(i).Y+shiftY)*zoomFactor, (nodes.get(i).R*zoomFactor-15), paint);
+            	canvas.drawCircle((cur.X+shiftX)*zoomFactor, (cur.Y+shiftY)*zoomFactor, (cur.R*zoomFactor-15), paint);
+            	if(cur.img!=null 
+            			&& cur.img.getWidth()<=cur.R*zoomFactor*2
+            			&& cur.img.getHeight()<=cur.R*zoomFactor*2)
+            	{
+            		canvas.drawBitmap(cur.img,
+            				(cur.X+shiftX-cur.R/2)*zoomFactor, (cur.Y+shiftY-cur.R/2)*zoomFactor
+            				, paint);
+            	}
             }
             if(!done)
             	zoom();
@@ -257,6 +273,9 @@ class Panel extends SurfaceView implements SurfaceHolder.Callback ,OnTouchListen
             	if(index==3)
             	{
             		//TODO : node[3] is selected, what action to do?
+            		EntryActivity ea=new EntryActivity();
+            		Intent newActivity=new Intent(ea,EntryActivity.class);
+            		_ElectionsActivity.startActivity(newActivity);
             	}
             }
     }
@@ -274,7 +293,7 @@ public class ElectionsActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-		Panel panel=new Panel(this);
+		Panel panel=new Panel(this,this);
 		setContentView(panel);
     }
 }
