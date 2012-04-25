@@ -262,7 +262,7 @@ class Panel extends SurfaceView implements SurfaceHolder.Callback ,OnTouchListen
             			&& cur.img.getHeight()<=cur.R*zoomFactor*2)
             	{
             		canvas.drawBitmap(cur.img,
-            				(cur.X+shiftX-cur.R/2)*zoomFactor, (cur.Y+shiftY-cur.R/2)*zoomFactor
+            				(cur.X+shiftX)*zoomFactor-cur.img.getWidth()/2, (cur.Y+shiftY)*zoomFactor-cur.img.getHeight()/2
             				, paint);
             	}
             }
