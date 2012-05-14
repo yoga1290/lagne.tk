@@ -21,6 +21,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.sax.TextElementListener;
 import android.text.Layout;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -41,6 +42,9 @@ public class CanvasView extends SurfaceView implements SurfaceHolder.Callback ,O
 	private	LinearLayout	popView;
 	private EditText	popupView_text;
 	boolean requiresMap=false;
+	
+	//when the canvas is touched, (like onMousePress)
+	private int	initialTouchX=0,initialTouchY=0;
 
 // connectivity[i]= {..children of parent#i..}
 	private int	connectivity[][]=new int[][]{
@@ -239,6 +243,9 @@ public class CanvasView extends SurfaceView implements SurfaceHolder.Callback ,O
 		y=(int)((y/zoomFactor-shiftY));
 		for(int i=0;i<nodes.length;i++)
 		{
+			/*
+			 *  (nx-X)*(nx-X)+(ny-Y)*(ny-Y) <= R*R ,distance between (x,y) & radius of circles
+			 */
 			nx=nodes[i].X;
 			ny=nodes[i].Y;
 			nr=nodes[i].R;
@@ -286,12 +293,29 @@ public class CanvasView extends SurfaceView implements SurfaceHolder.Callback ,O
     }
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
-		if(!done)	return false; //if not done zooming, do nothing
-		index=getSelectedIndex((int)event.getX(),(int)event.getY());
-		if(index==-1) return false;
-		done=false;
-		zoom();
-		return false;
+		if ((event.getAction() == MotionEvent.ACTION_DOWN)) //On Touch Press ,when your finger enters the screen
+		{
+			initialTouchX=(int) event.getX();
+			initialTouchY=(int) event.getY();
+		}
+		else if ((event.getAction() == MotionEvent.ACTION_MOVE) ) //On Move ,when your finger moves on the screen
+		{
+			shiftX+=(	(int)event.getX()- initialTouchX)/10;
+			shiftY+=(	(int)event.getY()- initialTouchY)/10;
+			postInvalidate();
+		}
+		else  if((event.getAction() == MotionEvent.ACTION_UP) ) //On Touch Release ,when your finger leaves the screen
+		{
+				if(!done)	return true; //if not done zooming, do nothing
+				index=getSelectedIndex((int)event.getX(),(int)event.getY());
+				if(index==-1) return true;
+				done=false;
+				zoom();
+			
+		}
+		
+		
+		return true;
 	}
 	
 	synchronized void  showMap()

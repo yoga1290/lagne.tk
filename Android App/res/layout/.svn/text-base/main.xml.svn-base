@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <!-- <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+         android:text="@string/hello" /> -->
+
+    <EditText
+        android:id="@+id/TextField_NID"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number|numberDecimal"
+        android:text="@string/nid" android:maxLength="14" android:maxLines="1">
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/button_OK"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/button_ok"/>
+
+</LinearLayout>

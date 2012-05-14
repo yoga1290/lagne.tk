@@ -14,19 +14,20 @@ import java.net.URLEncoder;
 
 public class URLThread extends Thread
 {
-	private String url;
+	private String url,POSTdata="";
 	private ElectionsActivity _ea;
-	public URLThread(String url,ElectionsActivity _ea)
+	public URLThread(String url,ElectionsActivity _ea,String POSTdata)
 	{
 		this.url=url;
 		this._ea=_ea;
+		this.POSTdata=POSTdata;
 	}
 	@Override
 	public void run()
 	{
 			boolean pass=true;
 			String res="";
-			String urlParameters="nid=12345678901234";
+//			String urlParameters="nid=12345678901234";
 			URL url;
 		    HttpURLConnection connection = null;  
 		    try {
@@ -38,7 +39,7 @@ public class URLThread extends Thread
 		           "application/x-www-form-urlencoded");
 					
 		      connection.setRequestProperty("Content-Length", "" + 
-		               Integer.toString(urlParameters.getBytes().length));
+		               Integer.toString(POSTdata.getBytes().length));
 		      connection.setRequestProperty("Content-Language", "en-US");  
 					
 		      connection.setUseCaches (false);
@@ -48,7 +49,7 @@ public class URLThread extends Thread
 		      //Send request
 		      DataOutputStream wr = new DataOutputStream (
 		                  connection.getOutputStream ());
-		      wr.writeBytes (urlParameters);
+		      wr.writeBytes (POSTdata);
 		      wr.flush ();
 		      wr.close ();
 
@@ -65,7 +66,8 @@ public class URLThread extends Thread
 		      res= response.toString();
 
 		    } catch (Exception e) {
-
+		    	// Counter for Bad Requests (Google Analytics)
+		    	_ea.tracker.trackPageView("/BadRequest");
 		      e.printStackTrace();
 
 		    } finally {
