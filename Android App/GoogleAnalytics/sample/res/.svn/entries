@@ -1,37 +1,0 @@
-10
-
-dir
-4
-https://lagnetk.googlecode.com/svn/trunk/Android_App/GoogleAnalytics/sample/res
-https://lagnetk.googlecode.com/svn
-
-
-
-2012-05-09T17:44:42.052694Z
-4
-yoga1290
-
-
-svn:special svn:externals svn:needs-lock
-
-
-
-
-
-
-
-
-
-
-
-1d6de73b-132f-98c6-4eac-637a8218ff18
-
-drawable
-dir
-
-layout
-dir
-
-values
-dir
-

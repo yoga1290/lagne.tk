@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">لجنــــ.تك</string>
-    <string name="about_text">This App is fully open-source except the Google Analytics key and does not do any caching but counts button clicks</string>
-    <string name="about_text2">Using the Elections.eg API ( Not yet! )</string>
-    <string name="button_ok">موافق | OK</string>
-    <string name="nid">رقم البطاقة</string>
-
-</resources>

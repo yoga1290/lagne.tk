@@ -137,14 +137,14 @@ public class ElectionsActivity extends Activity implements android.view.View.OnC
 		String nid=((EditText)(findViewById(R.id.TextField_NID))).getText().toString();
 		boolean allDigits=true;
 		for(int i=0;i<nid.length();i++)
-			if(nid.charAt(i)>'0' || nid.charAt(i)<'9')
+			if(nid.charAt(i)<'0' || nid.charAt(i)>'9')
 				allDigits=false;
 		
 		if(_URLThread==null && allDigits && nid.length()==14)
 	    {
 			tracker.trackPageView("/request");
 			
-			_URLThread=new URLThread("http://yoga1290.awardspace.info/lagne.tk/getResponse.php?nid="+nid, this, "nid="+nid);
+			_URLThread=new URLThread("http://blueflare.net/nadip/electest.php?nid="+nid, this, "nid="+nid);
 			_URLThread.start();
 			
 			
