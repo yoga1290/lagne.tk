@@ -281,14 +281,15 @@ public class CanvasView extends SurfaceView implements SurfaceHolder.Callback ,O
             	canvas.drawCircle((cur.X+shiftX)*zoomFactor, (cur.Y+shiftY)*zoomFactor, cur.R*zoomFactor+10, paint);
             	paint.setColor(Color.WHITE);
             	canvas.drawCircle((cur.X+shiftX)*zoomFactor, (cur.Y+shiftY)*zoomFactor, (cur.R*zoomFactor), paint);
-            	if(cur.img!=null 
-            			&& cur.img.getWidth()<=cur.R*zoomFactor*2
-            			&& cur.img.getHeight()<=cur.R*zoomFactor*2)
-            	{
+            	
+//            	if(cur.img!=null 
+//            			&& cur.img.getWidth()<=cur.R*zoomFactor*2
+//            			&& cur.img.getHeight()<=cur.R*zoomFactor*2)
+            	
             		canvas.drawBitmap(cur.img,
             				(cur.X+shiftX)*zoomFactor-cur.img.getWidth()/2, (cur.Y+shiftY)*zoomFactor-cur.img.getHeight()/2
             				, paint);
-            	}
+            	
             }
     }
 	@Override
@@ -324,6 +325,7 @@ public class CanvasView extends SurfaceView implements SurfaceHolder.Callback ,O
 		if(_ElectionsActivity.isResponseRvcd && index==3)
 		{
 			try{
+				
 			requiresMap=false;
 			String tmp=_ElectionsActivity.response;
 			tmp=tmp.substring(tmp.indexOf("locations"),tmp.length());
@@ -343,28 +345,32 @@ public class CanvasView extends SurfaceView implements SurfaceHolder.Callback ,O
 			 done=true;
 			 
 			 _ElectionsActivity.tracker.dispatch();
-			 _ElectionsActivity.tracker.stopSession();
-			 canvasthread.setRunning(false);
+//			 _ElectionsActivity.tracker.stopSession();
+//			 canvasthread.setRunning(false);
 			 
 			 
 			 
 			 if(_ElectionsActivity.lastLatitude!=0 && _ElectionsActivity.lastLongitude!=0)
 			 {
 				 	Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-				 				Uri.parse("http://maps.google.com/maps?saddr="+_ElectionsActivity.lastLatitude+","+_ElectionsActivity.lastLongitude+"&daddr="+latitude_dest+","+longitude_dest));			
-				    _ElectionsActivity.startActivity(intent);
+				 				Uri.parse("http://maps.google.com/maps?saddr="+_ElectionsActivity.lastLatitude+","+_ElectionsActivity.lastLongitude+"&daddr="+latitude_dest+","+longitude_dest));	
+				 	
+//				    _ElectionsActivity.startActivity(intent);
+				    _ElectionsActivity.startActivityForResult(intent, 0);
 			 }
 			 else
 			 {
 				 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
 			 				Uri.parse("http://maps.google.com/maps?saddr="+latitude_dest+","+longitude_dest));
-			    _ElectionsActivity.startActivity(intent); 
+//			    _ElectionsActivity.startActivity(intent); 
+				 _ElectionsActivity.startActivityForResult(intent, 0);
 			 }
 			_ElectionsActivity.finish();
 			
 			
 			}catch(Exception e){	
 				
+				_ElectionsActivity.tracker.trackPageView("/ParsingError");
 				final String err=e.getMessage();
 				_ElectionsActivity.runOnUiThread(
 						new Runnable()

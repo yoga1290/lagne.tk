@@ -1,10 +1,28 @@
 <html>
 <head>
 <title>لجنـــــ.تك —Lagne.tk</title>
-
+<meta http-equiv="X-Frame-Options" content="GOFORIT">
 <! <script src="jquery.js">
+
+<!-- Google-hosted jQuery library, might load faster! -->
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
 </script>
+
+<!-- Google Analytics Tracking code -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-31377357-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<!-- END of Google Analytics Tracking code -->
 </head>
 <body bgcolor="black" background="black">
 
@@ -182,11 +200,11 @@ function zoom()
 	else	pass++;
 
 
-	if((node[index][3]*(zoomFactor+0.1)*2<canvas.width/1.8)
-			&& (node[index][3]*(zoomFactor+0.1)*2<canvas.height/1.8))
+	if((node[index][3]*(zoomFactor+0.1)*2<canvas.width/2)
+			&& (node[index][3]*(zoomFactor+0.1)*2<canvas.height/2))
 		zoomFactor+=0.1;
-	else if((node[index][3]*(zoomFactor-0.1)*2>canvas.width/1.8)
-			&& (node[index][3]*(zoomFactor-0.1)*2>canvas.height/1.8))
+	else if((node[index][3]*(zoomFactor-0.1)*2>canvas.width/2)
+			&& (node[index][3]*(zoomFactor-0.1)*2>canvas.height/2))
 		zoomFactor-=0.1;
 	else	pass++;
 
@@ -197,13 +215,13 @@ function zoom()
 	{
 		done=1;
 		if(index==5)
-			setTimeout('location.href="http://lagnetk.googlecode.com";',1000);
+			setTimeout('top.location.href="http://lagnetk.googlecode.com";',1000);
 		else if(index==4)
-			setTimeout('location.href="https://github.com/yoga1290/lagne.tk";',1000);
+			setTimeout('top.location.href="https://github.com/yoga1290/lagne.tk";',1000);
 		else if(index==1)
-			setTimeout('location.href="http://about.me/yoga1290";',1000);
+			setTimeout('top.location.href="http://about.me/yoga1290";',1000);
                 else if(index==2)
- 			setTimeout('location.href="http://lagnetk.googlecode.com/files/Elections.apk";',1000);         
+ 			setTimeout('top.location.href="http://lagnetk.googlecode.com/files/Elections.apk";',1000);         
 		
 	}
 }
@@ -235,8 +253,8 @@ function main()
 	context.lineWidth = 1;
 	context.strokeStyle = "black";
 
-	canvas.width=$(window).width();
-	canvas.height=$(window).height();
+	canvas.width=$(window).width()-10;
+	canvas.height=$(window).height()-10;
 	init();
 	draw();
 
@@ -276,8 +294,8 @@ function main()
 
 
 	$(window).resize(function(){
-		canvas.width=$(window).width();
-		canvas.height=$(window).height();
+		canvas.width=$(window).width()-10;
+		canvas.height=$(window).height()-10;
 		init();
 		zoom();
 		});
@@ -287,4 +305,3 @@ main();
 </script>
 </body>
 </html>
-

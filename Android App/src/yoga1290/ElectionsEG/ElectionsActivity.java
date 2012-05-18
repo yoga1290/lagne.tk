@@ -72,7 +72,7 @@ public class ElectionsActivity extends Activity implements android.view.View.OnC
         
         tracker = GoogleAnalyticsTracker.getInstance();
 //         Start the tracker in manual dispatch mode...
-        tracker.startNewSession("UA-XXXXXXXX", getApplication());
+        tracker.startNewSession("UA-31377357-2", getApplication());
         tracker.trackPageView("/HomeScreen");
         
  
@@ -101,12 +101,12 @@ public class ElectionsActivity extends Activity implements android.view.View.OnC
 	    // Register the listener with the Location Manager to receive location updates
 	      //Try getting location from the Network
 	      try{
-	    	  locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locationListener);
+	    	  locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 20000, 0, locationListener);
 	      }catch(Exception e){}
 	      
 	      // Try getting location from the GPS
 	      try{
-	    	  locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
+	    	  locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 20000, 0, locationListener);
 	      }catch(Exception e){}
 	      
 	      // Initially get the last known location from GPS, if there were no GPS, try getting it from the Network
