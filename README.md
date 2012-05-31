@@ -1,3 +1,7 @@
+<font color="RED">
+This is dead project now!
+</font>
+
 = *لجنـــــ.تك* =
 
 Simple Android App with cute UI, helps you with the Egyptian Elections'12!
